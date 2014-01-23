@@ -26,7 +26,7 @@ def __dumps(*args, **kwargs):
     return json.dumps(
         args[0] if len(args) is 1 else dict(*args, **kwargs),
         indent=indent,
-        default=default,
+        default=default or current_app.config.get('JSONIFY_DEFAULT'),
     )
 
 def jsonpify(*args, **kwargs):
