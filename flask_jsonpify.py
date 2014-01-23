@@ -18,7 +18,7 @@ def __dumps(*args, **kwargs):
     if current_app.config.get('JSONIFY_PRETTYPRINT_REGULAR', False) \
         and not request.is_xhr:
         indent = 2
-    if 'default' in kwargs
+    if 'default' in kwargs:
         default = kwargs['default']
         del kwargs['default']
     elif current_app.config.get('JSONIFY_DEFAULT', False):
