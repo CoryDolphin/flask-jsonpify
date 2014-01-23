@@ -21,14 +21,12 @@ def __dumps(*args, **kwargs):
     if 'default' in kwargs:
         default = kwargs['default']
         del kwargs['default']
-    elif current_app.config.get('JSONIFY_DEFAULT', False):
-        default = current_app.config.get('JSONIFY_DEFAULT')
     else:
         default = None
     return json.dumps(
         args[0] if len(args) is 1 else dict(*args, **kwargs),
         indent=indent,
-        default=default,
+        default=default or current_app.config.get('JSONIFY_DEFAULT'),
     )
 
 def jsonpify(*args, **kwargs):
