@@ -18,7 +18,16 @@ def __dumps(*args, **kwargs):
     if current_app.config.get('JSONIFY_PRETTYPRINT_REGULAR', False) \
         and not request.is_xhr:
         indent = 2
-    return json.dumps(args[0] if len(args) is 1 else dict(*args, **kwargs), indent=indent)
+    if 'default' in kwargs:
+        default = kwargs['default']
+        del kwargs['default']
+    else:
+        default = None
+    return json.dumps(
+        args[0] if len(args) is 1 else dict(*args, **kwargs),
+        indent=indent,
+        default=default or current_app.config.get('JSONIFY_DEFAULT'),
+    )
 
 def jsonpify(*args, **kwargs):
     """Creates a :class:`~flask.Response` with the JSON or JSON-P representation of
