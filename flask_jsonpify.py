@@ -6,7 +6,7 @@ def __pad(strdata):
     nothing.
     """
     if request.args.get('callback'):
-        return "%s(%s);" % (request.args.get('callback'), strdata)
+        return "typeof {0} === 'function' && {0}({1});".format(request.args.get('callback'), strdata)
     else:
         return strdata
 
